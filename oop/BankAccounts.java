@@ -1,0 +1,5 @@
+abstract class Account { protected String owner; protected double balance; public Account(String owner,double bal){this.owner=owner; this.balance=bal;} public void deposit(double amt){ if(amt<0) throw new IllegalArgumentException("negative"); balance+=amt; } public abstract void withdraw(double amt); public String toString(){ return owner+" : "+balance; } }
+class SavingsAccount extends Account { private double rate; public SavingsAccount(String owner,double bal,double rate){ super(owner,bal); this.rate=rate; } public void addInterest(){ balance += balance*rate; } public void withdraw(double amt){ if(amt<0||amt>balance) throw new IllegalArgumentException("invalid"); balance-=amt; } }
+class CurrentAccount extends Account { public CurrentAccount(String owner,double bal){ super(owner,bal);} public void withdraw(double amt){ if(amt<0) throw new IllegalArgumentException("invalid"); balance-=amt; }
+}
+public class BankAccounts { public static void main(String[] args){ SavingsAccount s=new SavingsAccount("Alice",1000,0.05); s.addInterest(); s.withdraw(100); System.out.println(s); CurrentAccount c=new CurrentAccount("Bob",500); c.withdraw(50); System.out.println(c); } }
